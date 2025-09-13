@@ -1,7 +1,10 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { initDb } from './config/db.js'
+import { initDb } from './configs/db.js'
+import categoryRoutes from './routes/category.js'
+import expenseRoutes from './routes/expenses.js'
+import userRoutes from './routes/user.js'
 
 dotenv.config()
 
@@ -22,6 +25,10 @@ app.get('/api/v1/health', (_req, res) => {
     uptime: process.uptime()
   })
 })
+
+app.use('/api/v1/users', userRoutes)
+app.use('/api/v1/categories', categoryRoutes)
+app.use('/api/v1/expenses', expenseRoutes)
 
 const port = process.env.PORT || 8000
 
