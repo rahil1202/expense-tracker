@@ -4,6 +4,7 @@ import { initDb } from './configs/db.js'
 import { applyMiddlewares } from './middleware/index.js'
 import categoryRoutes from './routes/category.js'
 import expenseRoutes from './routes/expenses.js'
+import statsRoute from './routes/stats.js'
 import userRoutes from './routes/user.js'
 
 dotenv.config()
@@ -28,9 +29,10 @@ app.get('/api/v1/health', (_req, res) => {
   })
 })
 
-app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/categories', categoryRoutes)
 app.use('/api/v1/expenses', expenseRoutes)
+app.use('/api/v1/stats', statsRoute)
+app.use('/api/v1/users', userRoutes)
 
 const port = process.env.PORT || 8000
 
