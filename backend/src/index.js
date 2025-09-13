@@ -1,7 +1,7 @@
 import express from 'express'
-import cors from 'cors'
 import dotenv from 'dotenv'
 import { initDb } from './configs/db.js'
+import { applyMiddlewares } from './middleware/index.js'
 import categoryRoutes from './routes/category.js'
 import expenseRoutes from './routes/expenses.js'
 import userRoutes from './routes/user.js'
@@ -11,8 +11,10 @@ dotenv.config()
 await initDb() 
 
 const app = express()
- app.use(cors())
- app.use(express.json())
+
+app.use(express.json())
+
+applyMiddlewares(app)
 
 app.get('/', (_req, res) => {
   res.send('Hello! from the backend!')
