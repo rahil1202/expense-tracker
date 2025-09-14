@@ -1,0 +1,246 @@
+{
+  "info": {
+    "name": "Expense Tracker API",
+    "_postman_id": "4b3b4b8f-5c0d-47f2-9a3b-9d8c3c6e1aaa",
+    "description": "Users, Categories, Expenses CRUD + Stats (with optional ?months=). Uses env var baseUrl (e.g., http://localhost:8000).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users"
+          }
+        },
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test.user+{{$timestamp}}@example.com\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/users"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Created (201)', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.environment.set('userId', json.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get User by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/users/{{userId}}" }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Test User Updated\" }" },
+            "url": "{{baseUrl}}/api/v1/users/{{userId}}"
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/users/{{userId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "List Categories",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/categories" }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Snacks {{ $randomInt }}\" }" },
+            "url": "{{baseUrl}}/api/v1/categories"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Created (201)', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.environment.set('categoryId', json.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Category by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/categories/{{categoryId}}" }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Updated Snacks\" }" },
+            "url": "{{baseUrl}}/api/v1/categories/{{categoryId}}"
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/categories/{{categoryId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "item": [
+        {
+          "name": "List Expenses (no filters)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/expenses" }
+        },
+        {
+          "name": "List Expenses (filters)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/expenses?user_id={{userId}}&category={{categoryId}}&start_date=2025-07-01&end_date=2025-09-30&limit=10&offset=0",
+              "host": ["{{baseUrl}}"],
+              "path": ["api","v1","expenses"],
+              "query": [
+                { "key": "user_id", "value": "{{userId}}" },
+                { "key": "category", "value": "{{categoryId}}" },
+                { "key": "start_date", "value": "2025-07-01" },
+                { "key": "end_date", "value": "2025-09-30" },
+                { "key": "limit", "value": "10" },
+                { "key": "offset", "value": "0" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Expense",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": {{userId}},\n  \"category\": {{categoryId}},\n  \"amount\": 19.99,\n  \"date\": \"2025-09-13 12:00:00\",\n  \"description\": \"Test expense from Postman\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/expenses"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Created (201)', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "});",
+                  "const json = pm.response.json();",
+                  "pm.environment.set('expenseId', json.id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Expense by ID",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/expenses/{{expenseId}}" }
+        },
+        {
+          "name": "Update Expense",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"amount\": 29.49, \"description\": \"Updated via Postman\" }" },
+            "url": "{{baseUrl}}/api/v1/expenses/{{expenseId}}"
+          }
+        },
+        {
+          "name": "Delete Expense",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/api/v1/expenses/{{expenseId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Stats",
+      "item": [
+        {
+          "name": "Top Days (all-time)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/top-days" }
+        },
+        {
+          "name": "Top Days (?months=6)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/top-days?months=6" }
+        },
+        {
+          "name": "Monthly Change (all-time)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/monthly-change" }
+        },
+        {
+          "name": "Monthly Change (?months=6)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/monthly-change?months=6" }
+        },
+        {
+          "name": "Prediction (all-time)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/prediction" }
+        },
+        {
+          "name": "Prediction (?months=6)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/prediction?months=6" }
+        },
+        {
+          "name": "Summary (all three, all-time)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/summary" }
+        },
+        {
+          "name": "Summary (?months=6)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/stats/summary?months=6" }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" }
+  ]
+}

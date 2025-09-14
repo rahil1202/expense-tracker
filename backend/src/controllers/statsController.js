@@ -74,8 +74,7 @@ export async function getMonthlyChange(req, res, next) {
   } catch (err) { next(err) }
 }
 
-//  * If window has <3 months, we average what’s available (1–2 months).
-
+//  window has <3 months, we average what’s available (1–2 months).
 export async function getPrediction(req, res, next) {
   try {
     const months = req.validated?.query?.months
@@ -112,7 +111,7 @@ export async function getPrediction(req, res, next) {
   } catch (err) { next(err) }
 }
 
-/** GET /api/v1/stats/summary?months=N — bundle the three in one response */
+/** the three in one response */
 export async function getStatsSummary(req, res, next) {
   try {
     const months = req.validated?.query?.months
