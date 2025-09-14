@@ -1,35 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
+import { Wallet, User, Layers } from 'lucide-react'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <header className="border-b bg-white">
+        <div className="mx-auto max-w-6xl px-5 py-4 flex items-center gap-3">
+          <Wallet className="w-6 h-6" />
+          <h1 className="font-semibold text-lg">Expense Tracker</h1>
+          <div className="ml-auto flex items-center gap-4 text-sm text-gray-600">
+            <span className="inline-flex items-center gap-2"><User className="w-4 h-4" /> Users</span>
+            <span className="inline-flex items-center gap-2"><Layers className="w-4 h-4" /> Categories</span>
+          </div>
+        </div>
+      </header>
+      <main className="mx-auto max-w-6xl px-5 py-6">
+        <div className="rounded-xl border bg-white p-6 shadow-sm">
+          <p className="text-gray-700">Frontend setup complete. We’ll wire API & pages next.</p>
+        </div>
+      </main>
+    </div>
   )
 }
-
-export default App
