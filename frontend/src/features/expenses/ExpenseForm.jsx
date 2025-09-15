@@ -10,7 +10,7 @@ export default function ExpenseForm({ onClose, onSubmit, isLoading, initial }) {
     user_id: initial?.user_id ?? '',
     category: initial?.category ?? '',
     amount: initial?.amount ?? '',
-    date: initial?.date ? initial.date.slice(0,16).replace(' ', 'T') : '', // for datetime-local
+    date: initial?.date ? initial.date.slice(0,16).replace(' ', 'T') : '',
     description: initial?.description ?? ''
   })
   const [errors, setErrors] = React.useState({})

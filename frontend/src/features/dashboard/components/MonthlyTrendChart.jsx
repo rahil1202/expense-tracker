@@ -2,11 +2,10 @@ import React from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { LineChart as LineIcon } from 'lucide-react'
 
-// Consistent color for the line chart
 const CHART_COLOR = '#3B82F6'
 
 export default function MonthlyTrendChart({ data }) {
-  // Ensure data is valid and not empty
+  // validation date
   const hasData = data && Array.isArray(data) && data.length > 0
 
   return (
