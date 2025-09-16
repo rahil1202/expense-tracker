@@ -1,5 +1,7 @@
 # 📊 Expense Tracker
 
+[Live Link](https://expense-tracker-rahil1202.vercel.app)
+
 Full-stack **Expense Tracker** web app built with:
 
 * **Frontend**: React + Vite + TailwindCSS + TanStack Query + lucide-react
@@ -158,3 +160,4 @@ frontend/
 ## 📜 License
 
 MIT © 2025 [Rahil Vahora](https://github.com/rahil1202)
+
