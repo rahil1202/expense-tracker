@@ -1,6 +1,6 @@
 # 📊 Expense Tracker
 
-[Live Link](https://expense-tracker-rahil1202.vercel.app)
+# [Live Link](https://expense-tracker-rahil1202.vercel.app)
 
 Full-stack **Expense Tracker** web app built with:
 
@@ -160,4 +160,5 @@ frontend/
 ## 📜 License
 
 MIT © 2025 [Rahil Vahora](https://github.com/rahil1202)
+
 
